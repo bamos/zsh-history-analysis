@@ -37,8 +37,8 @@ class HistoryData:
                             full_line += next(it).decode()
                         commands.append(Command(full_line))
                     except Exception as e:
-                        print("Warning: Exception parsing.")
-                        print(e)
+                        #print("Warning: Exception parsing.")i
+                        #print(e)
                         pass
         self.commands=commands
 
@@ -53,11 +53,7 @@ class HistoryData:
                 freqs[hour] = num
             for hour,num in enumerate(freqs):
                 all_freqs[hour].append(num)
-        means = []; stdevs = []
-        for hour_freqs in all_freqs:
-            means.append(statistics.mean(hour_freqs))
-            stdevs.append(statistics.stdev(hour_freqs))
-        return means,stdevs
+        return all_freqs
 
     def get_weekday_breakdowns(self):
         days = self.group_by_day()
@@ -70,11 +66,7 @@ class HistoryData:
                 freqs[day] = num
             for day,num in enumerate(freqs):
                 all_freqs[day].append(num)
-        means = []; stdevs = []
-        for day_freqs in all_freqs:
-            means.append(statistics.mean(day_freqs))
-            stdevs.append(statistics.stdev(day_freqs))
-        return means,stdevs
+        return all_freqs
 
     def get_command_lengths(self):
         lengths = [(len(cmd.base_command),cmd) for cmd in self.commands]
@@ -118,15 +110,29 @@ if __name__=='__main__':
     all_hist = HistoryData(hist_files)
 
     if args.cmd == 'timeFrequencies':
-        hour_means, hour_stdevs = all_hist.get_hourly_breakdowns()
-        with open(args.analysis_dir+"/time-hours.csv","w") as f:
-            f.write(",".join([str(h) for h in hour_means])+"\n")
-            f.write(",".join([str(h) for h in hour_stdevs])+"\n")
+        hourly_freqs = all_hist.get_hourly_breakdowns()
+        means = []; stdevs = []
+        for hour_freqs in hourly_freqs:
+            means.append(statistics.mean(hour_freqs))
+            stdevs.append(statistics.stdev(hour_freqs))
+        with open(args.analysis_dir+"/time-hours-stats.csv","w") as f:
+            f.write(",".join([str(h) for h in means])+"\n")
+            f.write(",".join([str(h) for h in stdevs])+"\n")
+        with open(args.analysis_dir+"/time-hours-full.csv","w") as f:
+            for hour in map(list, zip(*hourly_freqs)):
+                f.write(",".join([str(h) for h in hour])+"\n")
 
-        wday_means, wday_stdevs = all_hist.get_weekday_breakdowns()
-        with open(args.analysis_dir+"/time-wdays.csv","w") as f:
-            f.write(",".join([str(h) for h in wday_means])+"\n")
-            f.write(",".join([str(h) for h in wday_stdevs])+"\n")
+        wdays_freqs = all_hist.get_weekday_breakdowns()
+        means = []; stdevs = []
+        for day_freqs in wdays_freqs:
+            means.append(statistics.mean(day_freqs))
+            stdevs.append(statistics.stdev(day_freqs))
+        with open(args.analysis_dir+"/time-wdays-stats.csv","w") as f:
+            f.write(",".join([str(h) for h in means])+"\n")
+            f.write(",".join([str(h) for h in stdevs])+"\n")
+        with open(args.analysis_dir+"/time-wdays-full.csv","w") as f:
+            for wday in map(list, zip(*wdays_freqs)):
+                f.write(",".join([str(h) for h in wday])+"\n")
     elif args.cmd == 'topCommands':
         cmds = all_hist.get_base_commands()
         with open(args.analysis_dir+"/top-cmds.csv","w") as f:
