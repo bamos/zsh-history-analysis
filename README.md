@@ -1,3 +1,4 @@
+# zsh History Analysis
 [zsh](http://www.zsh.org/) logs commands and timestamps to `~/.zsh_history` for
 shell features such as reverse history search.
 This repository is a fun project that provides shell, Python, and R
@@ -34,7 +35,7 @@ This plot shows the ECDF of the base commands and aliases.
 
 ![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/cmd-lengths-full.png)
 
-This distribution has a long tail: what command was over 100 characters!?
+What command was over 100 characters!?
 `analyze.py` will output the top five commands, and these
 long commands are from using the full path to an executable,
 such as the Android ARM cross compiler, as shown in the following output.
