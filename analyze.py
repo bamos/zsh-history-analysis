@@ -59,13 +59,7 @@ class HistoryData:
         days = self.group_by_day()
         all_freqs = [[] for x in range(7)]
         for day,cmds in sorted(days.items()):
-            weekdays = [cmd.timestamp_struct.tm_wday for cmd in cmds]
-            freq_counter = Counter(weekdays)
-            freqs = [0 for x in range(7)]
-            for day,num in freq_counter.items():
-                freqs[day] = num
-            for day,num in enumerate(freqs):
-                all_freqs[day].append(num)
+            all_freqs[cmds[0].timestamp_struct.tm_wday].append(len(cmds))
         return all_freqs
 
     def get_command_lengths(self):
