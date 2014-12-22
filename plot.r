@@ -1,8 +1,5 @@
 #!/usr/bin/env Rscript
 
-# library(extrafont) # First time: Run font_import() in R shell.
-# loadfonts()
-
 library(ggplot2)
 library(reshape)
 
