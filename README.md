@@ -15,6 +15,9 @@ the last few months.
 At a given hour or weekday, how frequently do I run commands?
 The following shows the average number of commands executed
 for each hour and weekday.
+I average 10 commands per hour overnight and
+a little more during the day, and Wednesdays seem to be
+my least productive days.
 
 ![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/time-hours-bar.png)
 ![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/time-wdays-bar.png)
