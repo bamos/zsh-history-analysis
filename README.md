@@ -15,9 +15,11 @@ At a given hour or weekday, how frequently do I run commands?
 The following shows the average number of commands executed
 for each hour and weekday.
 
-![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/time-hours.png)
-![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/time-wdays.png)
+![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/time-hours-bar.png)
+![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/time-wdays-bar.png)
 
+Many hours have 0 commands executed since I'm not typing commands every hour of
+every day, so these points have a high standard deviation.
 [Empirical Cumulative Distribution Functions (ECDF's)](http://en.wikipedia.org/wiki/Empirical_distribution_function)
 provide a deeper visualization of the distributions.
 
