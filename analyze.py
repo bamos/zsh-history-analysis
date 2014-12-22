@@ -76,6 +76,13 @@ class HistoryData:
             stdevs.append(statistics.stdev(day_freqs))
         return means,stdevs
 
+    def get_command_lengths(self):
+        lengths = [(len(cmd.base_command),cmd) for cmd in self.commands]
+        sortedLengths = sorted(lengths,key=lambda x: x[0],reverse=True)
+        for c_len,cmd in sortedLengths[0:5]:
+            print("  {}: {}".format(c_len,cmd.base_command))
+        return [len(cmd.base_command) for cmd in self.commands]
+
     def group_by_day(self):
         ts = [(cmd.timestamp_struct,cmd) for cmd in self.commands]
         kv = groupByKey(
@@ -97,6 +104,7 @@ if __name__=='__main__':
     parser_timeFrequencies = subparsers.add_parser('timeFrequencies')
     parser_topCommands = subparsers.add_parser('topCommands')
     parser_topCommands.add_argument("--num",type=int,default=15)
+    parser_commandLengths = subparsers.add_parser('commandLengths')
 
     args = parser.parse_args()
 
@@ -130,3 +138,7 @@ if __name__=='__main__':
             for tup in Counter(cmds).most_common(args.num):
                 print("{} | {}".format(tup[1],tup[0]))
                 f.write("{},{}\n".format(tup[1],tup[0]))
+    elif args.cmd == 'commandLengths':
+        cmd_lengths = all_hist.get_command_lengths()
+        with open(args.analysis_dir+"/cmd-lengths.csv","w") as f:
+            f.write(",".join([str(h) for h in cmd_lengths])+"\n")

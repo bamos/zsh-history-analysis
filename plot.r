@@ -37,3 +37,29 @@ p <- ggplot(df,aes(x=cmd_names,y=freqs)) +
   geom_bar(stat='identity',aes(y=freqs)) +
   theme_bw()
 ggsave("plots/top-cmds.png",width=7,height=6)
+
+cmd_lengths = as.numeric(read.csv("analysis/cmd-lengths.csv",header=F))
+df = data.frame(cmd_lengths)
+p <- ggplot() +
+  stat_ecdf(data=df,aes(x=cmd_lengths)) +
+  xlab("Base Command Length") +
+  ylab("") +
+  scale_x_continuous(
+      limits=c(0,max(df)),
+      breaks=seq(0,max(df),10),
+      minor_breaks=seq(0,max(df),5)
+  ) +
+  theme_bw()
+ggsave("plots/cmd-lengths-full.png",width=7,height=6)
+
+p <- ggplot() +
+  stat_ecdf(data=df,aes(x=cmd_lengths)) +
+  xlab("Base Command Length") +
+  ylab("") +
+  scale_x_continuous(
+      limits=c(0,max(df)/3),
+      breaks=seq(0,max(df)/3,10),
+      minor_breaks=seq(0,max(df)/3,5)
+  ) +
+  theme_bw()
+ggsave("plots/cmd-lengths-zoomed.png",width=7,height=6)
