@@ -128,9 +128,7 @@ if __name__=='__main__':
             f.write(",".join([str(h) for h in wday_means])+"\n")
             f.write(",".join([str(h) for h in wday_stdevs])+"\n")
     elif args.cmd == 'topCommands':
-        cmds = []
-        for history in all_history:
-            cmds += history.get_base_commands()
+        cmds = all_hist.get_base_commands()
         with open(args.analysis_dir+"/top-cmds.csv","w") as f:
             print("Frequency | Command")
             print("---|---")
