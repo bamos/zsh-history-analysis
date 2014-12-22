@@ -37,8 +37,8 @@ class HistoryData:
                             full_line += next(it).decode()
                         commands.append(Command(full_line))
                     except Exception as e:
-                        #print("Warning: Exception parsing.") # TODO
-                        #print(e)
+                        print("Warning: Exception parsing.")
+                        print(e)
                         pass
         self.commands=commands
 
