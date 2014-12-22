@@ -50,7 +50,8 @@ p <- ggplot() +
 ggsave("plots/time-hours-ecdf.png",width=7,height=6)
 
 wdays_m = as.numeric(read.csv("analysis/time-wdays-stats.csv",header=F,nrows=1))
-wdays_stdev = as.numeric(read.csv("analysis/time-wdays.csv",header=F,nrows=1,skip=1))
+wdays_stdev = as.numeric(read.csv("analysis/time-wdays-stats.csv",
+                                  header=F,nrows=1,skip=1))
 wday_str = c("Mon","Tues","Weds","Thurs","Fri","Sat","Sun")
 df <- data.frame(freqs = wdays_m, wdays = factor(wday_str,levels=wday_str),
                  stdev=wdays_stdev)
@@ -59,7 +60,7 @@ p <- ggplot(df,aes(x=wdays,y=freqs)) +
   xlab("Week Day") +
   ylab("Average Commands Executed") +
   geom_bar(stat='identity',aes(y=freqs)) +
-  #geom_errorbar(limits, width=0.25) +
+  geom_errorbar(limits, width=0.25) +
   theme_bw()
 ggsave("plots/time-wdays-bar.png",width=7,height=6)
 
