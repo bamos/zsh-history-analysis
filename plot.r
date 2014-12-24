@@ -18,31 +18,9 @@ p <- ggplot(df,aes(x=0:23,y=freqs)) +
 ggsave("plots/time-hours-bar.png",width=7,height=6)
 
 hours = read.csv("analysis/time-hours-full.csv",header=F)
-p <- ggplot() +
-  stat_ecdf(aes(x=hours[[1]])) +
-  stat_ecdf(aes(x=hours[[2]])) +
-  stat_ecdf(aes(x=hours[[3]])) +
-  stat_ecdf(aes(x=hours[[4]])) +
-  stat_ecdf(aes(x=hours[[5]])) +
-  stat_ecdf(aes(x=hours[[6]])) +
-  stat_ecdf(aes(x=hours[[7]])) +
-  stat_ecdf(aes(x=hours[[8]])) +
-  stat_ecdf(aes(x=hours[[9]])) +
-  stat_ecdf(aes(x=hours[[10]])) +
-  stat_ecdf(aes(x=hours[[11]])) +
-  stat_ecdf(aes(x=hours[[12]])) +
-  stat_ecdf(aes(x=hours[[13]])) +
-  stat_ecdf(aes(x=hours[[14]])) +
-  stat_ecdf(aes(x=hours[[15]])) +
-  stat_ecdf(aes(x=hours[[16]])) +
-  stat_ecdf(aes(x=hours[[17]])) +
-  stat_ecdf(aes(x=hours[[18]])) +
-  stat_ecdf(aes(x=hours[[19]])) +
-  stat_ecdf(aes(x=hours[[20]])) +
-  stat_ecdf(aes(x=hours[[21]])) +
-  stat_ecdf(aes(x=hours[[22]])) +
-  stat_ecdf(aes(x=hours[[23]])) +
-  stat_ecdf(aes(x=hours[[24]])) +
+df = melt(hours)
+p <- ggplot(df, aes(x=value)) +
+  stat_ecdf(aes(group = variable)) +
   theme(legend.title=element_blank()) +
   xlab("Number of Hourly Commands") +
   ylab("") +
@@ -65,21 +43,14 @@ p <- ggplot(df,aes(x=wdays,y=freqs)) +
 ggsave("plots/time-wdays-bar.png",width=7,height=6)
 
 wdays = read.csv("analysis/time-wdays-full.csv",header=F)
-p <- ggplot() +
-  stat_ecdf(data=data.frame(wdays[[1]]),aes(x=wdays[[1]],colour="m")) +
-  stat_ecdf(data=data.frame(wdays[[2]]),aes(x=wdays[[2]],colour="t")) +
-  stat_ecdf(data=data.frame(wdays[[3]]),aes(x=wdays[[3]],colour="w")) +
-  stat_ecdf(data=data.frame(wdays[[4]]),aes(x=wdays[[4]],colour="th")) +
-  stat_ecdf(data=data.frame(wdays[[5]]),aes(x=wdays[[5]],colour="f")) +
-  stat_ecdf(data=data.frame(wdays[[6]]),aes(x=wdays[[6]],colour="s")) +
-  stat_ecdf(data=data.frame(wdays[[7]]),aes(x=wdays[[7]],colour="su")) +
+df <- melt(wdays)
+p <- ggplot(df, aes(x=value)) +
+  stat_ecdf(aes(group=variable,colour=variable)) +
   scale_color_manual(
       name="",
-      breaks = c("m","t","w","th","f","s","su"),
-      values = c("m"="#CCE5FF", "t"="#99CCFF", "w"="#66B2FF", "th"="#3399FF",
-                 "f"="#0080FF", "s"="#0066CC", "su"="#004C99"),
-      labels = c("m"="Mon", "t"="Tues", "w"="Weds", "th"="Thurs", "f"="Fri",
-                 "s"="Sat", "su"="Sun")
+      values = c("#CCE5FF", "#99CCFF", "#66B2FF", "#3399FF",
+                 "#0080FF", "#0066CC", "#004C99"),
+      labels = c("Mon", "Tues", "Weds", "Thurs", "Fri", "Sat", "Sun")
   ) +
   theme(legend.title=element_blank()) +
   xlab("Number of Daily Commands") +
