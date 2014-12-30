@@ -7,6 +7,47 @@ These scripts can be extended to support Bash's `.bash_history`.
 
 Note: This is my first time using R and I am happy for improvements.
 
+# Getting Started
+You can run this on your `.zsh_history` files by cloning this repository
+and installing the following prerequisites.
+Ensure you have increased the history file size so commands aren't removed.
+Then, follow the steps in `Control Flow` to generate the plots.
+
+## Prerequisites
++ `PATH` contains `python3` and `Rscript`.
++ `R`: `ggplot2` is installed.
+
+## Increasing the History File Size
+Unfortunately, zsh's default history file size is limited to
+10000 lines by default and will truncate the history to this
+length by deduplicating entries and removing old data.
+
+Adding the following lines to `.zshrc` will remove the limits and
+deduplication of the history file.
+
+```Bash
+export HISTSIZE=1000000000
+export SAVEHIST=$HISTSIZE
+setopt EXTENDED_HISTORY
+```
+
+## Control Flow
+The following is the control flow for generating plots.
+
+1. Archive all `.zsh_history` files in `data/<server>.zsh_history`.
+`./pull-history-data.sh` is a script to partially help archiving the data
+that will pull files from a list of servers separated by newlines in a
+file named `servers`.
+2. Run `./analyze.py` to analyze the raw data files.
+`./analyze.py --help` will provide a help menu with the supported options.
+3. Run `./plot.r` to generate plots from the analyzed data.
+
+# Contributing
+I'm happy to review pull requests and look through issues.
+The most outstanding issue preventing a lot more analysis to
+be added is [#1](https://github.com/bamos/zsh-history-analysis/issues/1),
+which I would appreciate some ideas on.
+
 # Sample Results
 Following is a snapshot of results from my computers over
 the last few months.
@@ -60,42 +101,6 @@ The following plot shows the top commands are Linux utilities
 and [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) aliases.
 
 ![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/top-cmds.png)
-
-# Running
-## Prerequisites
-+ `PATH` contains `python3` and `Rscript`.
-+ `R`: `ggplot2` is installed.
-
-## Increasing the History File Size
-Unfortunately, zsh's default history file size is limited to
-10000 lines by default and will truncate the history to this
-length by deduplicating entries and removing old data.
-
-Adding the following lines to `.zshrc` will remove the limits and
-deduplication of the history file.
-
-```Bash
-export HISTSIZE=1000000000
-export SAVEHIST=$HISTSIZE
-setopt EXTENDED_HISTORY
-```
-
-## Control Flow
-The following is the control flow for generating plots.
-
-1. Archive all `.zsh_history` files in `data/<server>.zsh_history`.
-`./pull-history-data.sh` is a script to partially help archiving the data
-that will pull files from a list of servers separated by newlines in a
-file named `servers`.
-2. Run `./analyze.py` to analyze the raw data files.
-`./analyze.py --help` will provide a help menu with the supported options.
-3. Run `./plot.r` to generate plots from the analyzed data.
-
-# Contributing
-I'm happy to review pull requests and look through issues.
-The most outstanding issue preventing a lot more analysis to
-be added is [#1](https://github.com/bamos/zsh-history-analysis/issues/1),
-which I would appreciate some ideas on.
 
 # Similar Projects
 + [This post](http://www.smallmeans.com/notes/shell-history/)
