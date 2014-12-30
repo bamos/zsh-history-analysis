@@ -9,13 +9,19 @@ Note: This is my first time using R and I am happy for improvements.
 
 # Getting Started
 You can run this on your `.zsh_history` files by cloning this repository
+with `git clone https://github.com/bamos/zsh-history-analysis.git`
 and installing the following prerequisites.
 Ensure you have increased the history file size so commands aren't removed.
 Then, follow the steps in `Control Flow` to generate the plots.
 
 ## Prerequisites
-+ `PATH` contains `python3` and `Rscript`.
-+ `R`: `ggplot2` is installed.
++ `PATH` contains `python3` and `Rscript`, which can be installed from
+  your package manager.
+  In Arch Linux, the required packages are
+  [python](https://www.archlinux.org/packages/extra/x86_64/python/)
+  and [r](https://www.archlinux.org/packages/extra/i686/r/).
++ `R`: [ggplot2](http://ggplot2.org/) is installed
+  from an R shell with `install.packages("ggplot2")`.
 
 ## Increasing the History File Size
 Unfortunately, zsh's default history file size is limited to
