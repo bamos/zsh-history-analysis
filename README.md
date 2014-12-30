@@ -94,7 +94,7 @@ file named `servers`.
 # Contributing
 I'm happy to review pull requests and look through issues.
 The most outstanding issue preventing a lot more analysis to
-be added in [#1](https://github.com/bamos/zsh-history-analysis/issues/1),
+be added is [#1](https://github.com/bamos/zsh-history-analysis/issues/1),
 which I would appreciate some ideas on.
 
 # Similar Projects
