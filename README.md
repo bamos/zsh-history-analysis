@@ -1,4 +1,4 @@
-# zsh History Analysis
+# Zsh History Analysis
 [zsh](http://www.zsh.org/) logs commands and timestamps to `~/.zsh_history` for
 shell features such as reverse history search.
 This repository is a fun project that provides shell, Python, and R
