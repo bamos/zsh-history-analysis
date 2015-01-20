@@ -20,8 +20,10 @@ Then, follow the steps in `Control Flow` to generate the plots.
   In Arch Linux, the required packages are
   [python](https://www.archlinux.org/packages/extra/x86_64/python/)
   and [r](https://www.archlinux.org/packages/extra/i686/r/).
-+ `R`: [ggplot2](http://ggplot2.org/) is installed
-  from an R shell with `install.packages("ggplot2")`.
+  + `R`: [ggplot2](http://ggplot2.org/) and
+  [reshape](http://had.co.nz/reshape) are installed
+  from an R shell with `install.packages("ggplot2")`
+  and `install.packages("reshape")`.
 
 ## Increasing the History File Size
 Unfortunately, zsh's default history file size is limited to
