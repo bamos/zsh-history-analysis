@@ -109,7 +109,3 @@ The following plot shows the top commands are Linux utilities
 and [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) aliases.
 
 ![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/top-cmds.png)
-
-# Similar Projects
-+ [This post](http://www.smallmeans.com/notes/shell-history/)
-gives a one-liner to produces a text-based histogram of the top commands.
