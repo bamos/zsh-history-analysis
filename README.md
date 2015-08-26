@@ -80,10 +80,6 @@ provide a deeper visualization of the distributions.
 ![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/time-wdays-ecdf.png)
 
 ## Average command length
-[.aliases](https://github.com/bamos/dotfiles/blob/master/.aliases) in my
-[dotfiles repo](https://github.com/bamos/dotfiles)
-is a list of short aliases mostly one to two characters in length.
-This plot shows the ECDF of the base commands and aliases.
 
 ![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/cmd-lengths-full.png)
 
