@@ -5,8 +5,6 @@ This repository is a fun project that provides shell, Python, and R
 scripts to parse, analyze, visualize `.zsh_history` files.
 These scripts can be extended to support Bash's `.bash_history`.
 
-Note: This is my first time using R and I am happy for improvements.
-
 # Getting Started
 You can run this on your `.zsh_history` files by cloning this repository
 with `git clone https://github.com/bamos/zsh-history-analysis.git`
@@ -50,15 +48,7 @@ file named `servers`.
 `./analyze.py --help` will provide a help menu with the supported options.
 3. Run `./plot.r` to generate plots from the analyzed data.
 
-# Contributing
-I'm happy to review pull requests and look through issues.
-The most outstanding issue preventing a lot more analysis to
-be added is [#1](https://github.com/bamos/zsh-history-analysis/issues/1),
-which I would appreciate some ideas on.
-
 # Sample Results
-Following is a snapshot of results from my computers over
-the last few months.
 
 ## Command Frequencies
 At a given hour or weekday, how frequently do I run commands?
@@ -68,20 +58,20 @@ I average 10 commands per hour overnight and
 a little more during the day, and Wednesdays seem to be
 my least productive days.
 
-![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/time-hours-bar.png)
-![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/time-wdays-bar.png)
+![](https://github.com/bamos/zsh-history-analysis/raw/master/results.grad.early/time-hours-bar.png)
+![](https://github.com/bamos/zsh-history-analysis/raw/master/results.grad.early/time-wdays-bar.png)
 
 Many hours have 0 commands executed since I'm not typing commands every hour of
 every day, so these points have a high standard deviation.
 [Empirical Cumulative Distribution Functions (ECDF's)](http://en.wikipedia.org/wiki/Empirical_distribution_function)
 provide a deeper visualization of the distributions.
 
-![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/time-hours-ecdf.png)
-![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/time-wdays-ecdf.png)
+![](https://github.com/bamos/zsh-history-analysis/raw/master/results.grad.early/time-hours-ecdf.png)
+![](https://github.com/bamos/zsh-history-analysis/raw/master/results.grad.early/time-wdays-ecdf.png)
 
 ## Average command length
 
-![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/cmd-lengths-full.png)
+![](https://github.com/bamos/zsh-history-analysis/raw/master/results.grad.early/cmd-lengths-full.png)
 
 What command was over 100 characters!?
 `analyze.py` will output the top five commands, and these
@@ -96,7 +86,7 @@ $ ./analyze.py commandLengths
 Scoping into the majority of the data shows that almost 50% of my
 commands are one or two characters.
 
-![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/cmd-lengths-zoomed.png)
+![](https://github.com/bamos/zsh-history-analysis/raw/master/results.grad.early/cmd-lengths-zoomed.png)
 
 ## Top Commands
 Since almost 50% of my commands are one or two characters,
@@ -104,4 +94,9 @@ what are the top commands?
 The following plot shows the top commands are Linux utilities
 and [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) aliases.
 
-![](https://github.com/bamos/zsh-history-analysis/raw/master/sample-results/top-cmds.png)
+![](https://github.com/bamos/zsh-history-analysis/raw/master/results.grad.early/top-cmds.png)
+
+# My Undergrad vs Grad Student Frequencies
+
+![](https://github.com/bamos/zsh-history-analysis/raw/master/results.undergrad/time-hours-bar.png)
+![](https://github.com/bamos/zsh-history-analysis/raw/master/results.grad.early/time-hours-bar.png)
