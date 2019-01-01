@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
-
+from collections import Counter, defaultdict
+from itertools import groupby
 import argparse
 import os
+import shutil
+import statistics
 import sys
 import time
-from itertools import groupby
-from collections import Counter, defaultdict
-import statistics
+import warnings
+
+
+try:
+    from termgraph.termgraph import chart
+except ImportError:
+    chart = None
 
 
 def groupByKey(m):
@@ -88,6 +95,7 @@ if __name__ == '__main__':
     parser.add_argument('--history-dir', type=str, default="data")
     parser.add_argument('--analysis-dir', type=str, default="analysis")
     parser.add_argument('--plots-dir', type=str, default="plots")
+    parser.add_argument('--history-file', type=str, default="~/.zsh_history")
 
     subparsers = parser.add_subparsers(help='sub-command help', dest='cmd')
     subparsers.required = True
@@ -105,6 +113,8 @@ if __name__ == '__main__':
             pass
     mkdir_p(args.analysis_dir)
     mkdir_p(args.plots_dir)
+    mkdir_p(args.history_dir)
+    shutil.copyfile(args.history_file, os.path.join(args.history_dir, 'history'))
 
     hist_files = [args.history_dir+"/"+x for x in os.listdir(args.history_dir)]
     all_hist = HistoryData(hist_files)
@@ -123,6 +133,19 @@ if __name__ == '__main__':
             for hour in map(list, zip(*hourly_freqs)):
                 f.write(", ".join([str(h) for h in hour])+"\n")
 
+        if chart:
+            # draw using termgraph
+            print('y: Hour of Day, x: Average Commands Executed')
+            labels = list(map(str, range(24)))
+            data = [[x] for x in means]
+            chart_args = {
+                'stacked': False, 'width': 50, 'no_labels': False, 'format': '{:<5.2f}',
+                'suffix': '', "vertical": False
+            }
+            chart(colors=[], data=data, args=chart_args, labels=labels)
+        else:
+            warnings.warn('Termgraph package is not installed, no graph will be drawn')
+
         wdays_freqs = all_hist.get_weekday_breakdowns()
         means = []
         stdevs = []
@@ -135,15 +158,38 @@ if __name__ == '__main__':
         with open(args.analysis_dir+"/time-wdays-full.csv", "w") as f:
             for wday in map(list, zip(*wdays_freqs)):
                 f.write(", ".join([str(h) for h in wday])+"\n")
+        if chart:
+            # draw using termgraph
+            print('y: Week Day, x: Average Commands Executed')
+            labels = ("Mon","Tues","Weds","Thurs","Fri","Sat","Sun")
+            data = [[x] for x in means]
+            chart_args = {
+                'stacked': False, 'width': 50, 'no_labels': False, 'format': '{:<5.2f}',
+                'suffix': '', "vertical": False
+            }
+            chart(colors=[], data=data, args=chart_args, labels=labels)
     elif args.cmd == 'topCommands':
         cmds = all_hist.get_base_commands()
         with open(args.analysis_dir+"/top-cmds.csv", "w") as f:
             print("Frequency | Command")
             print("---|---")
             f.write("{},{}\n".format("Frequency", "Command"))
-            for tup in Counter(cmds).most_common(args.num):
+            mc_cmds_counter = Counter(cmds).most_common(args.num)
+            for tup in mc_cmds_counter:
                 print("{} | {}".format(tup[1], tup[0]))
                 f.write("{},{}\n".format(tup[1], tup[0]))
+            if chart:
+                # draw using termgraph
+                print('y: Command, x: Frequency')
+                labels = [x[0] for x in mc_cmds_counter]
+                data = [[x[1]] for x in mc_cmds_counter]
+                chart_args = {
+                    'stacked': False, 'width': 50, 'no_labels': False, 'format': '{:<5.2f}',
+                    'suffix': '', "vertical": False
+                }
+                chart(colors=[], data=data, args=chart_args, labels=labels)
+            else:
+                warnings.warn('Termgraph package is not installed, no graph will be drawn')
     elif args.cmd == 'commandLengths':
         cmd_lengths = all_hist.get_command_lengths()
         with open(args.analysis_dir+"/cmd-lengths.csv", "w") as f:
