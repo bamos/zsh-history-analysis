@@ -7,6 +7,13 @@ import shutil
 import statistics
 import sys
 import time
+import warnings
+
+
+try:
+    from termgraph.termgraph import chart
+except ImportError:
+    chart = None
 
 
 def groupByKey(m):
@@ -126,6 +133,19 @@ if __name__ == '__main__':
             for hour in map(list, zip(*hourly_freqs)):
                 f.write(", ".join([str(h) for h in hour])+"\n")
 
+        if chart:
+            # draw using termgraph
+            print('y: Hour of Day, x: Average Commands Executed')
+            labels = list(map(str, range(24)))
+            data = [[x] for x in means]
+            chart_args = {
+                'stacked': False, 'width': 50, 'no_labels': False, 'format': '{:<5.2f}',
+                'suffix': '', "vertical": False
+            }
+            chart(colors=[], data=data, args=chart_args, labels=labels)
+        else:
+            warnings.warn('Termgraph package is not installed, no graph will be drawn')
+
         wdays_freqs = all_hist.get_weekday_breakdowns()
         means = []
         stdevs = []
@@ -138,6 +158,16 @@ if __name__ == '__main__':
         with open(args.analysis_dir+"/time-wdays-full.csv", "w") as f:
             for wday in map(list, zip(*wdays_freqs)):
                 f.write(", ".join([str(h) for h in wday])+"\n")
+        if chart:
+            # draw using termgraph
+            print('y: Week Day, x: Average Commands Executed')
+            labels = ("Mon","Tues","Weds","Thurs","Fri","Sat","Sun")
+            data = [[x] for x in means]
+            chart_args = {
+                'stacked': False, 'width': 50, 'no_labels': False, 'format': '{:<5.2f}',
+                'suffix': '', "vertical": False
+            }
+            chart(colors=[], data=data, args=chart_args, labels=labels)
     elif args.cmd == 'topCommands':
         cmds = all_hist.get_base_commands()
         with open(args.analysis_dir+"/top-cmds.csv", "w") as f:
