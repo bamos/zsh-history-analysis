@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-
+from collections import Counter, defaultdict
+from itertools import groupby
 import argparse
 import os
+import shutil
+import statistics
 import sys
 import time
-from itertools import groupby
-from collections import Counter, defaultdict
-import statistics
 
 
 def groupByKey(m):
@@ -88,6 +88,7 @@ if __name__ == '__main__':
     parser.add_argument('--history-dir', type=str, default="data")
     parser.add_argument('--analysis-dir', type=str, default="analysis")
     parser.add_argument('--plots-dir', type=str, default="plots")
+    parser.add_argument('--history-file', type=str, default="~/.zsh_history")
 
     subparsers = parser.add_subparsers(help='sub-command help', dest='cmd')
     subparsers.required = True
@@ -105,6 +106,8 @@ if __name__ == '__main__':
             pass
     mkdir_p(args.analysis_dir)
     mkdir_p(args.plots_dir)
+    mkdir_p(args.history_dir)
+    shutil.copyfile(args.history_file, os.path.join(args.history_dir, 'history'))
 
     hist_files = [args.history_dir+"/"+x for x in os.listdir(args.history_dir)]
     all_hist = HistoryData(hist_files)
