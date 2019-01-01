@@ -174,9 +174,22 @@ if __name__ == '__main__':
             print("Frequency | Command")
             print("---|---")
             f.write("{},{}\n".format("Frequency", "Command"))
-            for tup in Counter(cmds).most_common(args.num):
+            mc_cmds_counter = Counter(cmds).most_common(args.num)
+            for tup in mc_cmds_counter:
                 print("{} | {}".format(tup[1], tup[0]))
                 f.write("{},{}\n".format(tup[1], tup[0]))
+            if chart:
+                # draw using termgraph
+                print('y: Command, x: Frequency')
+                labels = [x[0] for x in mc_cmds_counter]
+                data = [[x[1]] for x in mc_cmds_counter]
+                chart_args = {
+                    'stacked': False, 'width': 50, 'no_labels': False, 'format': '{:<5.2f}',
+                    'suffix': '', "vertical": False
+                }
+                chart(colors=[], data=data, args=chart_args, labels=labels)
+            else:
+                warnings.warn('Termgraph package is not installed, no graph will be drawn')
     elif args.cmd == 'commandLengths':
         cmd_lengths = all_hist.get_command_lengths()
         with open(args.analysis_dir+"/cmd-lengths.csv", "w") as f:
