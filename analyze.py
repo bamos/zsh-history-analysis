@@ -95,7 +95,9 @@ if __name__ == '__main__':
     parser.add_argument('--history-dir', type=str, default="data")
     parser.add_argument('--analysis-dir', type=str, default="analysis")
     parser.add_argument('--plots-dir', type=str, default="plots")
-    parser.add_argument('--history-file', type=str, default="~/.zsh_history")
+    home_dir = os.environ.get("HOME","~")
+    parser.add_argument('--history-file', type=str,
+                        default="%s/.zsh_history" % home_dir)
 
     subparsers = parser.add_subparsers(help='sub-command help', dest='cmd')
     subparsers.required = True
