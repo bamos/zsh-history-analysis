@@ -142,7 +142,7 @@ if __name__ == '__main__':
             data = [[x] for x in means]
             chart_args = {
                 'stacked': False, 'width': 50, 'no_labels': False, 'format': '{:<5.2f}',
-                'suffix': '', "vertical": False
+                'suffix': '', 'vertical': False, 'histogram': False, 'no_values': False
             }
             chart(colors=[], data=data, args=chart_args, labels=labels)
         else:
@@ -167,7 +167,7 @@ if __name__ == '__main__':
             data = [[x] for x in means]
             chart_args = {
                 'stacked': False, 'width': 50, 'no_labels': False, 'format': '{:<5.2f}',
-                'suffix': '', "vertical": False
+                'suffix': '', 'vertical': False, 'histogram': False, 'no_values': False
             }
             chart(colors=[], data=data, args=chart_args, labels=labels)
     elif args.cmd == 'topCommands':
@@ -187,7 +187,7 @@ if __name__ == '__main__':
                 data = [[x[1]] for x in mc_cmds_counter]
                 chart_args = {
                     'stacked': False, 'width': 50, 'no_labels': False, 'format': '{:<5.2f}',
-                    'suffix': '', "vertical": False
+                    'suffix': '', 'vertical': False, 'histogram': False, 'no_values': False
                 }
                 chart(colors=[], data=data, args=chart_args, labels=labels)
             else:
